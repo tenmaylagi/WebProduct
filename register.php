@@ -29,3 +29,4 @@ $form_title = 'Đăng Kí Tài Khoản';
 
 include_once 'account-form.php';	
 
+//test
