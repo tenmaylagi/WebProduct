@@ -1,0 +1,12 @@
+.parallax {
+	
+}
+.parallax > div.link {
+	cursor: pointer;
+}
+.parallax > div {
+	background-position: top; position: relative; background-attachment: scroll !important; background-repeat: no-repeat; background-size: cover;
+}
+.parallax p {
+	display: block; position: relative;
+}

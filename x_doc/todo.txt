@@ -1,0 +1,245 @@
+2018.05.26-----------------------
+Đã thêm thông tin copyright vào các file php
+để các nhóm có thể thay thế bằng thông tin của mình.
+Ví dụ:
+	Copyright Le Minh Hoa ---> Copyright C1710L G6 Nguyen Van A, Tran Van B, Le Van C, Vu Van D
+2018.05.19-----------------------
+Đã biên tập lại xong database cho các chủ đề sau:
+mobile, auto, bag, beauty_care, watch, empty
+
+Đổi tên file system.functions.php thành global.php
+
+2018.05.17------------------------
+Đã sửa xong các trang view-product-info.php, view-checkout.php
+Loại bỏ đi trang view-product-details.php
+Loại bỏ dần các hàm url trỏ tới các module cũ
+Đã sửa lỗi cập nhật giỏ hàng trên trang /cart.php
+Loại bỏ file system.urls.php
+Tinh chỉnh lại tên hàm trong file system.functions.php
+
+2018.05.12------------------------
+Đã sửa lại mã nguồn liên quan đến giỏ hàng cho đơn giản hơn, 
+cụ thể là trọn vẹn cho bộ theme opencart_000.
+
+Không còn sử dụng các hàm base64_serialize của bản gốc opencart nữa.
+
+2018.05.10-------------------------
+Thay doi primary key cua bang `banner_image`
+Loai bo *.php lien quan den modules, banner
+
+Loai bo cac bang sau trong database:
+`banner`, `module`, `product_related`
+
+2018.05.09
+Bo sung checkbox: best_seller, featured cho giao dien: view-product-form.php
+SQL:
+`best_seller` tinyint(1) NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  
+ALTER TABLE `product` ADD `best_seller` tinyint(1) NOT NULL DEFAULT '0';  
+ALTER TABLE `product` ADD `featured`    tinyint(1) NOT NULL DEFAULT '0';  
+
+
+Bo dung doan ma $_POST trong file product-form.php de bat du lieu best_seller, featured gui len
+Bo sung doan ma sau day cho ham productAdd(), productEdit()
+$best_seller     = (int)$data['best_seller'];
+$featured        = (int)$data['featured'];
+best_seller = '{$best_seller}',
+featured = '{$featured}',
+
+Bo di giao dien san pham lien quan tren trang view-product-form.php
+Bo di giao dien san pham lien quan tren trang view-product-details.php
+Bo di giao dien san pham lien quan tren trang view-product-info.php
+
+Bo di doan ma 'Cac san pham lien quan' trong ham productAdd(), productEdit()
+----
+Bo sung4 cot `featured` cho bang `category`:
+	ALTER TABLE `category` ADD `featured`    tinyint(1) NOT NULL DEFAULT '0'; 
+Bo sung checkbox 'featured' tren giao dien view-category-form.php
+Bo sung $_POST['category_featured'] trong file xu ly category-form.php
+Bo sung setting:
+	INSERT INTO `setting` SET `key` = 'categories_featured_limit', `value`='3'	
+----
+Bổ sung cột `featured` cho bảng `manufacturer`	
+	ALTER TABLE `manufacturer` ADD `featured`    tinyint(1) NOT NULL DEFAULT '0';
+sửa: view-man*form.php, man*form.php	
+
+---
+Bổ sung cột `status` cho bảng `banner_image`
+	ALTER TABLE `banner_image` ADD `status`    tinyint(1) NOT NULL DEFAULT '0';
+
+---------------------------------------------------------------------
+2018.04.23: Đang cố gắng loại bỏ các hàm url...() ra khỏi các file PHP
+để làm tăng tính tường minh của mã nguồn, giúp sinh viên dễ trả lời hơn khi bị chất vấn.
+
+
+2018.04.13: Đã sửa lại các file common-override.js
+để cho chức năng giỏ hàng và so sánh sản phẩm chạy tốt.
+
+2018.04.11: Loại bỏ một loạt các hằng số khỏi file configs.php
+do kiểu thư mục gốc cũ: c:/xampp/htdocs
+
+2018.04.10: Tinh chỉnh mã nguồn table.product.php
+để học được nhiều điều về tốc độ xử lý. Ví dụ:
+productInfo() vs productDetails()
+
+Đã bổ sung trang product-info.php với ý định thay thế cho trang product-details.php
+
+[Thông Tin Sản Phẩm] khác với [Chi Tiết Sản Phẩm]
+Trong thông tin sản phẩm có rất nhiều tác vụ định dạng dữ liệu (giá tiền, mô tả)
+và xử lý ảnh, còn [chi tiết sản phẩm] không cần phải làm như vậy.
+
+// [Chú Ý] Vẫn nên triển khai controller cho các trang
+// nếu viết tắt quá trong view bằng các hàm php thì e khi triển khai sang các
+// theme mới sẽ không dễ.
+// Hơn nữa, controller có nhiệm vụ làm những công việc chung nhau giữa các bộ themes.
+
+2018.04.09: Chuyển sang đường dẫn trực tiếp ngay dưới Server Root Document
+và thấy mọi thứ đơn giản hơn rất nhiều. Lấy ví dụ như phần Cart Ajax
+và các thuộc tính href="" không cần PHP nữa !!!
+
+2017.04.28 -------------------------------
+Xem quyển hướng dẫn DW Project bằng tiếng Anh thì mới thấy là thiếu nhiều thứ.
+Ví dụ: use case, site map, liệt kê các trang tương ứng với sitemap có đuôi file.
+
+@todo 2017.03.18---------------------------------------------------------------
+Đang có nhiều vấn đề với các hằng số chỉ đường dẫn.
+Như thế này trong các file layout.php là quá dài:
+	src="<?php echo URL_UI;?>home/themes/opencart/0000/template_files
+như thế này mới là đúng:
+	src="<?php echo URL_THEME_HOME;?>/template_files/	
+vì vừa ngắn gọn, phân biệt với PATH, DIR, lại cũng dễ và tiện cho việc chuyển
+từ template.htm sang layout.php
+
+Cách viết này là đúng: define('FOLDER_IMAGE', 'x_img/mobile');
+Cách viết này là sai: define('PATH_IMAGE', 'x_img/mobile');
+Cách viết này là sai: define('DIR_IMAGE', DIR_APP . FOLDER_IMAGE."/");
+
+Tạo ra các file thông báo lỗi cho $web_content	
+
+
+@todo 2017.03.08---------------------------------------------------------------
+Nên thay  hằng 'DIR_UI_HOME_THEMES' bằng 'PATH_VIEW_HOME'
+đừng viết là VIEW_HOME, vì người ta ko hiểu được đây là đường dẫn
+còn thì việc sử dụng dấu "/" ở cuối đường dẫn là okay rồi. (vì sao lại vậy ???)
+
+
+@todo 2017.01.03:
+Nên bỏ đi session token
+@xem: http://stackoverflow.com/questions/2034281/php-form-token-usage-and-handling
+vì chẳng hiểu session token để làm gì.
+
+@todo 2017.01.09: sửa lại những chỗ: if ($product['image'])
+Nếu biến đó ko rỗng và có tồn tại file ảnh thì sao, ngược lại thì sao ????
+
+@todo 2017.01.06: Loại bỏ các cột không cần thiết trong bảng `product`
+(trong phạm vi Aptech thì không cần).
+`product`.meta_title
+`product`.meta_description
+`product`.meta_keywords
+`product`.tags (để lại vì nó dính dáng đến từ khóa tìm kiếm)
+`product`.tax_class_id
+`product`.location (là gì thế ? vị trí bán hàng ???)
+`product`.subtrack_stock
+`product`.seo_keywords
+`product`.keywords
+`product`.sku
+`product`.upc
+`product`.ean
+`product`.jan
+`product`.isbn
+`product`.mpn
+
+`product`.location
+`product`.discount
+`product`.special
+`product`.reward
+`product`.points
+`product`.viewed
+
+Chú ý khi xóa các truongf thông tin này phải:
+- xóa trong các file liên quan: table.product.php, session_cart, form-product.php
+- sau đó test thật kĩ các tình huống: thêm mới sản phẩm, sửa, giỏ hàng, truy vấn thông tin, v.v...
+- Nhớ xóa dấu phầy cuối cùng trong các lệnh update, delete, insert
+
+
+@todo2017.01.05: Nên loại bỏ các trường thông tin không cần thiết
+khi thêm mới một mục, ví dụ:
+	http://localhost:82/web/admin/catalog/category.php
+bỏ đi: những phần liên quan đến meta tags, SEO keywords, columns, ...
+
+@todo: Sau khi danh tính của khách hàng được xác thực,
+thì phải điều hướng họ vào trang cá nhân trước đó họ muốn vào.
+
+@todo: Slideshow trên trang chủ, nếu là nâng cao và đầy đủ thì mỗi slide ảnh phải có
+- Ảnh banner kích thước to
+- Tiêu đề, mô tả ngắn, giá cả, đường link đến sản phẩm, nút bấm mua hàng
+Tuy nhiên để làm được thế đòi hỏi công sức code rất nhiều. Nên tạm thời chỉ giới hạn:
+ Ảnh banner, các nút điều hướng Next, Previous là đủ.
+ 
+@todo Thêm mới một key trong bảng setting để điều khiển số lượng loại sản phẩm trên top menu của trang chủ
+@see table.category.php , layout-home.php
+------------------------------------------------------
+@todo: Home Page: có rất nhiều module đang còn thiếu trên
+trang chủ: 
+- Sản Phẩm Mới Nhất (Latest New)
+- Banner có vài sản phẩm bất kỳ ở ngay dưới slideshow.
+- Sản phẩm đặc biệt (Special)
+- Sản phẩm bán chạy nhất (Best Seller)
+
+Tham khảo: http://livedemo00.template-help.com/opencart_52995/
+
+@todo Xây dựng cơ chế tùy biến template cho phân trang.
+
+@todo nâng cấp giao diện trang báo lỗi: error.php
+
+// @todo có nên để một số trang có layout riêng ???
+@todo(easy) Thêm ảnh Empty Cart trong trường hợp khách không mua gì mà lại xem giỏ hàng
+
+@TODO 
+Triển khai các module liên quan đến khách hàng
+- quản lý các khách hàng ở phía admin (xem thông tin, khóa tài khoản, không được xóa)
+- tìm regex khác phù hợp hơn để đánh giá email khi đăng kí mới tài khoản
+--------------------------------------------------------
+DONE! Nên giữ nguyên cú pháp Object Notation cart.add(), ...
+đỡ phải viết lại nhiều mà thực ra sinh viên cũng chỉ cần viết đè:
+     cart.add = function() {...};
+@todo thay hết các cái thứ object kiểu như cart.add, cart.remove, cart.add 
+bằng các hàm javascript để sinh viên đỡ phải học OOP của JavaScript.
+
+ví dụ:
+function webCartAdd(....){}
+
+function webCartRemove(....){}
+
+function webCartUpdate(....){}
+
+Tuy nhiên, nếu giữ nguyên thì tận dụng được mã nguồn của website mà mình 
+copy thiết kế của họ.
+--------------------------------------------------------------------------------------
+- Giải thích các trường total trong tài liệu doc: 
+để tăng performance của hệ thống, không phải tính toán lại mỗi khi truy xuất dữ liệu.
+--------------------------------------------------------------------------------------
+- Cho thêm các cờ trạng thái vào một số bảng để khi xóa thì không phải là xóa thật mà chỉ là ẩn nó đi.
+-------------------
+Notice: primary key on table order_history cannot be: PRIMARY KEY (`order_id`, `order_status_id`)
+it should be: PRIMARY KEY (`order_id`, `date_added`),
+because one order status can appear many times, and two order history of different orders can be added at the same time.
+---------------------------------------------------------------------------------------------------------
+- Loại bỏ các trường thông tin thừa trong bảng product
+- Review lại toàn bộ kiểu dữ liệu của các cột và các ràng buộc, đặc biệt là : 
+Not Null đang bị lạm dụng quá.
+---------------------------------------------------------------------------------------------------------
+- Test lại toàn bộ vì bây giờ đã thêm vào rất nhiều ràng buộc liên quan
+foreign key, primary key theo cặp
+---------------------------------------------------------------------------------------------------------
+- Xây dựng module: "/".APP."/admin/sales/customer.php?token=";
+---------------------------------------------------------------------------------------------------------
+@todo (nâng cao, để sau cùng)
+Mô hình hóa vai trò (role), quyền (permission) của user trên hệ thống thông qua các 
+bảng tương ứng trong database
+------------------------------------------------
+@todo (nâng cao, để sau)
+- Encrypt image name when uploading them to the web server folder.
+Kiểm tra nếu đã tồn tại một file với tên như thế rồi thì
+mã hóa tên file mới, bằng một chuỗi 32 kí tự chẳng hạn, học từ thằng processmaker.
